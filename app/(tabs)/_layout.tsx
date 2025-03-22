@@ -10,7 +10,7 @@ const TabIconStyles = ({ focused, title, Icon }: any) => {
     return (
       <LinearGradient
         colors={["#4b6cb7", "#182848"]}
-        style={{ borderRadius: 32 }}
+        style={{ borderRadius: 40 }}
       >
         <View className="min-w-[110px] overflow-hidden w-full min-h-[80px] m-1 h-full flex flex-row justify-center items-center">
           {Icon}
