@@ -65,8 +65,8 @@ const CustomSwitch = ({
       >
         <MaterialIcons
           name={isEnabled ? onIconName : offIconName}
-          size={20}
-          color="#000000"
+          size={22}
+          color={isEnabled ? "#020617" : "#eab308"}
         />
       </Animated.View>
     </TouchableOpacity>
