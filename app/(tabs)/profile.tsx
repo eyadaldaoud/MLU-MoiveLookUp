@@ -4,6 +4,7 @@ import {
   Image,
   ScrollView,
   TouchableHighlight,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
 import { useColorScheme } from "nativewind";
@@ -12,6 +13,7 @@ import CustomSwitch from "../components/CustomSwitch";
 import Text from "../components/Text";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Octicons from "@expo/vector-icons/Octicons";
 
 const Profile = () => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
@@ -26,7 +28,7 @@ const Profile = () => {
                 source={require("../../assets/images/avatar.png")}
                 className="w-20 h-20 rounded-full"
               />
-              <Text className="mt-4 ml-2">User242412</Text>
+              <Text className="mt-4 ml-2 font-bold">User242412</Text>
             </View>
             <View
               className="flex flex-row mt-10 items-start border-2
@@ -42,8 +44,23 @@ const Profile = () => {
                 className="ml-auto mt-auto mb-auto mr-2"
               />
             </View>
-
-            <View className="min-h-[310px]" />
+            <TouchableOpacity>
+              <View
+                className="flex flex-row mt-4 items-start border-2
+           border-secondary  p-4 rounded-full"
+              >
+                <Text className="mt-auto mb-auto ml-2 p-4 font-bold">
+                  App Version : 1.0
+                </Text>
+                <Octicons
+                  name="versions"
+                  size={24}
+                  color={colorScheme === "dark" ? "white" : "black"}
+                  className="ml-auto mt-auto mb-auto mr-2"
+                />
+              </View>
+            </TouchableOpacity>
+            <View className="min-h-[220px]" />
             <View
               className="flex flex-row mt-4 mb-4 items-start border-2
            border-secondary rounded-full p-4"
