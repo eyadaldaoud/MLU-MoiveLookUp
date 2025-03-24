@@ -1,7 +1,18 @@
 import { View } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import Movies from "../components/Movies";
 
+interface Task {
+  title: string;
+}
 export default function Index() {
   return (
-    <View className="flex-1 dark:bg-slate-950  dark:text-white text-black"></View>
+    <View className="flex-1 bg-background dark:bg-foreground dark:text-white text-black">
+      <SafeAreaProvider>
+        <SafeAreaView className="m-4 h-full">
+          <Movies />
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </View>
   );
 }

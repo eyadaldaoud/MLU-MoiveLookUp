@@ -19,7 +19,7 @@ const Profile = () => {
   const { colorScheme, toggleColorScheme } = useColorScheme();
 
   return (
-    <View className="flex-1  bg-white dark:bg-slate-950">
+    <View className="flex-1  bg-background dark:bg-foreground">
       <SafeAreaProvider>
         <SafeAreaView className="m-4 h-full">
           <ScrollView>
