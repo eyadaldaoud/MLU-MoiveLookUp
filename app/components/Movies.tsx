@@ -54,5 +54,14 @@ export default function Movies() {
     FetchMovies();
   }, []);
 
-  return <View>{movies && <MoviesCard movies={movies} />}</View>;
+  return (
+    <View>
+      {loading && (
+        <View className="text-2xl justify-center items-center">
+          <Text>Loading...</Text>
+        </View>
+      )}
+      {movies && !loading && <MoviesCard movies={movies} />}
+    </View>
+  );
 }
