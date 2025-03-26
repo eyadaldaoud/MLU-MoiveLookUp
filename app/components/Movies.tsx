@@ -58,7 +58,7 @@ export default function Movies() {
     <View>
       {loading && (
         <View className="text-2xl justify-center items-center">
-          <Text>Loading...</Text>
+          <Text>Loading....</Text>
         </View>
       )}
       {movies && !loading && <MoviesCard movies={movies} />}
