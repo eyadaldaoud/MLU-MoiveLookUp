@@ -4,10 +4,17 @@ import { LinearGradient } from "expo-linear-gradient"; // For gradient overlay
 import { PopularMovies } from "./Movies";
 import Text from "./Text";
 import Entypo from "@expo/vector-icons/Entypo";
+import { router } from "expo-router";
 
 export default function MoviesCard({ movies }: any) {
   const renderMovie = ({ item }: { item: PopularMovies }) => (
-    <TouchableOpacity className="w-[48%] mb-4">
+    <TouchableOpacity
+      onPress={() => {
+        router.push(`/Movies/${item.id}`);
+      }}
+      key={item.id}
+      className="w-[48%] mb-4"
+    >
       <View className="relative">
         <Image
           className="w-full h-64 rounded-lg"
@@ -40,6 +47,9 @@ export default function MoviesCard({ movies }: any) {
                   {(item?.vote_average / 2).toFixed(1)}
                 </Text>
               </View>
+              <Text className="text-center mt-2 text-white text-sm ml-2">
+                {item?.release_date.slice(0, 4)}
+              </Text>
             </View>
           </LinearGradient>
         </View>
@@ -49,9 +59,6 @@ export default function MoviesCard({ movies }: any) {
 
   return (
     <View>
-      <Text className="text-2xl font-bold mb-4 text-center">
-        Popular Movies 🔥
-      </Text>
       <FlatList
         data={movies}
         renderItem={renderMovie}
