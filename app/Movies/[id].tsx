@@ -30,8 +30,7 @@ export default function MovieDetails() {
       method: "GET",
       headers: {
         accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZDQyYTg4YWQ0YmVjYTUzY2MzMGM0NWMwZWJlYWM0NCIsIm5iZiI6MTc0Mjg0ODU3MC43NDUsInN1YiI6IjY3ZTFjMjNhMGVlNTNkNGU3MWYwNGVmMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xl-tHKtC7X8vYfzniyWqQu-QNqtubtkhYrh-_eF-RUM",
+        Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
       },
     };
 

@@ -2,9 +2,10 @@ import { View } from "react-native";
 import React, { useEffect } from "react";
 import Text from "./Text";
 import MoviesCard from "./MoviesCard";
-import { SelectCountry } from "react-native-element-dropdown";
 import { useColorScheme } from "nativewind";
-
+import DropDownPicker from "react-native-dropdown-picker";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import Feather from "@expo/vector-icons/Feather";
 export interface PopularMovies {
   adult: boolean;
   backdrop_path: string;
@@ -21,105 +22,112 @@ export interface PopularMovies {
   vote_average: number;
   vote_count: number;
 }
+
 const MoviesTypeList = [
-  {
-    value: "popular",
-    lable: "Popular",
-  },
-  {
-    value: "top_rated",
-    lable: "Top Rated",
-  },
-  {
-    value: "now_playing",
-    lable: "Now Playing",
-  },
-  {
-    value: "upcoming",
-    lable: "Upcoming",
-  },
+  { label: "Popular", value: "popular" },
+  { label: "Top Rated", value: "top_rated" },
+  { label: "Now Playing", value: "now_playing" },
+  { label: "Upcoming", value: "upcoming" },
 ];
+
 export default function Movies() {
   const [movies, setMovies] = React.useState<PopularMovies[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
   const [page, setPage] = React.useState(1);
-  const [hasMore, setHasMore] = React.useState(true);
-  const [MoviesType, setMoviesType] = React.useState("popular");
+  const [MoviesType, setMoviesType] = React.useState(MoviesTypeList[0].value);
+  const [open, setOpen] = React.useState(false);
   const { colorScheme } = useColorScheme();
+
   const FetchMovies = async () => {
     try {
       setLoading(true);
-      const url =
-        `https://api.themoviedb.org/3/movie/${MoviesType}?language=en-US&page=` +
-        page;
+      const url = `https://api.themoviedb.org/3/movie/${MoviesType}?language=en-US&page=${page}`;
       const options = {
         method: "GET",
         headers: {
           accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwZDQyYTg4YWQ0YmVjYTUzY2MzMGM0NWMwZWJlYWM0NCIsIm5iZiI6MTc0Mjg0ODU3MC43NDUsInN1YiI6IjY3ZTFjMjNhMGVlNTNkNGU3MWYwNGVmMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xl-tHKtC7X8vYfzniyWqQu-QNqtubtkhYrh-_eF-RUM",
+          Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
         },
       };
-      await fetch(url, options)
-        .then((response) => response.json())
-        .then((response) => {
-          setMovies(response.results);
-        })
-        .catch((err) => {
-          setError(err);
-        });
+      const response = await fetch(url, options);
+      const data = await response.json();
+      setMovies(data.results);
     } catch (error: any) {
       setError(error);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     FetchMovies();
-  }, [MoviesType]);
+  }, [MoviesType, page]);
 
   return (
-    <View>
+    <View className="">
       {loading && (
         <View className="text-2xl justify-center items-center">
           <Text>Loading....</Text>
         </View>
       )}
-      {movies && !loading && (
+      {!loading && movies.length > 0 && (
         <View>
           <Text className="text-2xl font-bold mb-4 text-center">
-            {MoviesTypeList.find((e) => e.value === MoviesType)?.lable}
+            {MoviesTypeList.find((e) => e.value === MoviesType)?.label}
           </Text>
-          <SelectCountry
-            style={{
-              width: "100%",
-              height: 50,
-              backgroundColor: colorScheme === "dark" ? "#0000" : "#fff",
-              borderRadius: 8,
-              borderColor: "#ccc",
-            }}
-            selectedTextStyle={{
-              backgroundColor: colorScheme === "dark" ? "#0000" : "#fff",
-              color: colorScheme === "dark" ? "#fff" : "#000",
-              padding: 10,
-            }}
-            placeholderStyle={{
-              color: colorScheme === "dark" ? "#fff" : "#000",
-              backgroundColor: colorScheme === "dark" ? "#0000" : "#fff",
-            }}
-            maxHeight={200}
+
+          <DropDownPicker
+            open={open}
             value={MoviesType}
-            data={MoviesTypeList}
-            valueField="value"
-            labelField="lable"
-            imageField="image"
-            placeholder="Select movie type"
-            onChange={(e) => {
-              setMoviesType(e.value);
-            }}
+            items={MoviesTypeList}
+            setOpen={setOpen}
+            setValue={setMoviesType}
+            placeholder="Select Movie Type"
+            style={{ marginBottom: 10 }}
+            theme={colorScheme === "dark" ? "DARK" : "LIGHT"}
           />
-          <MoviesCard movies={movies} />
+          <View className="flex flex-row justify-center items-center">
+            <View className="flex flex-row">
+              <Feather
+                onPress={() => setPage(1)}
+                name="skip-back"
+                size={30}
+                className="mt-auto mb-auto"
+                color={colorScheme === "dark" ? "white" : "black"}
+              />
+              <MaterialIcons
+                onPress={() => {
+                  if (page > 1) {
+                    setPage(page - 1);
+                  }
+                }}
+                name="navigate-before"
+                size={40}
+                color={colorScheme === "dark" ? "white" : "black"}
+              />
+            </View>
+            <Text>Page {page}</Text>
+
+            <View className="flex flex-row">
+              <MaterialIcons
+                onPress={() => setPage(page + 1)}
+                name="navigate-next"
+                size={40}
+                color={colorScheme === "dark" ? "white" : "black"}
+              />
+              <Feather
+                onPress={() => setPage(page + 10)}
+                name="skip-forward"
+                size={30}
+                className="mt-auto mb-auto"
+                color={colorScheme === "dark" ? "white" : "black"}
+              />
+            </View>
+          </View>
+          <View className="mb-[360px]">
+            <MoviesCard movies={movies} />
+          </View>
         </View>
       )}
     </View>
