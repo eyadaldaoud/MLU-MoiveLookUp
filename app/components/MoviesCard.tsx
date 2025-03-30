@@ -21,7 +21,9 @@ export default function MoviesCard({ movies }: any) {
         />
 
         <View className="mt-1">
-          <Text className="font-bold text-lg">{item.title || "No title"}</Text>
+          <Text className="font-bold text-lg">
+            {item.title || item.name || "No title"}
+          </Text>
           <View className="flex-row items-center mt-1">
             {Array.from({ length: 5 }, (_, index) => {
               const rating = item.vote_average / 2;
@@ -38,7 +40,11 @@ export default function MoviesCard({ movies }: any) {
               {(item?.vote_average / 2).toFixed(1)}
             </Text>
           </View>
-          <Text className="text-sm mt-1">{item?.release_date.slice(0, 4)}</Text>
+          <Text className="text-sm mt-1">
+            {item?.media_type === "tv"
+              ? item?.first_air_date?.slice(0, 4)
+              : item?.release_date?.slice(0, 4)}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

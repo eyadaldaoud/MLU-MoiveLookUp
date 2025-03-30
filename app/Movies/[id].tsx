@@ -16,6 +16,11 @@ interface MovieDetailsType {
   overview: string;
   runtime: number;
   genres: { id: number; name: string }[];
+  adult: boolean;
+  name: string;
+  original_name: string;
+  first_air_date: string;
+  media_type: string;
 }
 
 export default function MovieDetails() {
@@ -120,8 +125,9 @@ export default function MovieDetails() {
               className="dark:text-white text-black text-2xl font-bold"
               numberOfLines={2}
             >
-              {movie.title}
+              {movie.title || movie.name || "No title"}
             </Text>
+
             <View className="flex-row items-center mt-2">
               {renderStarRating(Math.floor(movie.vote_average / 2))}
               <Text className="dark:text-white text-black ml-2">
@@ -134,15 +140,21 @@ export default function MovieDetails() {
                 size={20}
                 color={colorScheme === "dark" ? "white" : "black"}
               />
+
               <Text className="dark:text-white text-black ml-2">
                 {new Date(movie.release_date).getFullYear()}
               </Text>
-              <Text className="text-white ml-4">•</Text>
+              <Text className="text-black dark:text-white ml-4">
+                {movie.adult ? "18+" : "13+"}
+              </Text>
+              <Text className="text-black dark:text-white ml-4">•</Text>
+
               <MaterialIcons
                 name="timer"
                 size={20}
                 color={colorScheme === "dark" ? "white" : "black"}
               />
+
               <Text className="dark:text-white text-black ml-2">
                 {movie.runtime} mins
               </Text>
@@ -152,7 +164,7 @@ export default function MovieDetails() {
 
         <View className="px-4 mb-4">
           <View className="flex-row flex-wrap">
-            {movie.genres.map((genre) => (
+            {movie?.genres?.map((genre) => (
               <View
                 key={genre.id}
                 className="bg-gray-800 px-3 py-1 rounded-full mr-2 mb-2"

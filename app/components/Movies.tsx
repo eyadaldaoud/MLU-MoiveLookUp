@@ -21,10 +21,15 @@ export interface PopularMovies {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  name: string;
+  original_name: string;
+  first_air_date: string;
+  media_type: string;
 }
 
 const MoviesTypeList = [
   { label: "Popular", value: "popular" },
+  { label: "Trending", value: "trending" },
   { label: "Top Rated", value: "top_rated" },
   { label: "Now Playing", value: "now_playing" },
   { label: "Upcoming", value: "upcoming" },
@@ -42,7 +47,12 @@ export default function Movies() {
   const FetchMovies = async () => {
     try {
       setLoading(true);
-      const url = `https://api.themoviedb.org/3/movie/${MoviesType}?language=en-US&page=${page}`;
+      let url;
+      if (MoviesType === "trending") {
+        url = "https://api.themoviedb.org/3/trending/all/day?language=en-US";
+      } else {
+        url = `https://api.themoviedb.org/3/movie/${MoviesType}?language=en-US&page=${page}`;
+      }
       const options = {
         method: "GET",
         headers: {

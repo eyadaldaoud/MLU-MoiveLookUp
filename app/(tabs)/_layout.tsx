@@ -6,8 +6,10 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BlurView } from "expo-blur";
 import { MotiView } from "moti";
+import { useColorScheme } from "nativewind";
 
 const TabIconStyles = ({ focused, title, Icon }: any) => {
+  const { colorScheme } = useColorScheme();
   return (
     <MotiView
       animate={{
@@ -19,15 +21,21 @@ const TabIconStyles = ({ focused, title, Icon }: any) => {
         minHeight: 80,
         borderRadius: 15,
         marginHorizontal: 4,
-        backgroundColor: focused ? "#182848" : "#09203f",
+        backgroundColor: focused
+          ? colorScheme === "dark"
+            ? "#182848"
+            : "#e2e8f0"
+          : colorScheme === "dark"
+          ? "#09203f"
+          : "#fff",
         borderWidth: 1,
-        borderColor: focused ? "rgba(255, 255, 255, 0.2)" : "transparent",
+        borderColor: focused ? "#e2e8f0" : "transparent",
       }}
     >
-      <View className="min-w-[120px] overflow-hidden w-full min-h-[80px] m-1 h-full flex flex-row justify-center items-center">
+      <View className="min-w-[120px] text-slate-200 overflow-hidden w-full min-h-[80px] m-1 h-full flex flex-row justify-center items-center">
         {Icon}
         {!focused && (
-          <Text className="text-white text-xl mt-auto mb-auto ml-1">
+          <Text className="dark:text-white text-black text-xl mt-auto mb-auto ml-1">
             {title}
           </Text>
         )}
@@ -38,7 +46,7 @@ const TabIconStyles = ({ focused, title, Icon }: any) => {
 
 const _layout = () => {
   const insets = useSafeAreaInsets();
-
+  const { colorScheme } = useColorScheme();
   return (
     <Tabs
       screenOptions={{
@@ -81,7 +89,13 @@ const _layout = () => {
             <TabIconStyles
               focused={focused}
               title="Home"
-              Icon={<AntDesign name="home" size={24} color="white" />}
+              Icon={
+                <AntDesign
+                  name="home"
+                  size={24}
+                  color={colorScheme === "dark" ? "white" : "black"}
+                />
+              }
             />
           ),
         }}
@@ -99,7 +113,7 @@ const _layout = () => {
                 <MaterialCommunityIcons
                   name="bookmark-outline"
                   size={24}
-                  color="white"
+                  color={colorScheme === "dark" ? "white" : "black"}
                 />
               }
             />
@@ -115,7 +129,13 @@ const _layout = () => {
             <TabIconStyles
               focused={focused}
               title="Profile"
-              Icon={<AntDesign name="user" size={24} color="white" />}
+              Icon={
+                <AntDesign
+                  name="user"
+                  size={24}
+                  color={colorScheme === "dark" ? "white" : "black"}
+                />
+              }
             />
           ),
         }}
