@@ -24,13 +24,13 @@ interface MovieDetailsType {
 }
 
 export default function MovieDetails() {
-  const { id } = useLocalSearchParams();
+  const { type, id } = useLocalSearchParams();
   const [movie, setMovie] = useState<MovieDetailsType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const { colorScheme } = useColorScheme();
   const fetchMovie = async () => {
-    const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+    const url = `https://api.themoviedb.org/3/${type}/${id}?language=en-US`;
     const options = {
       method: "GET",
       headers: {

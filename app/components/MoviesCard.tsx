@@ -8,7 +8,10 @@ import { router } from "expo-router";
 export default function MoviesCard({ movies }: any) {
   const renderMovie = ({ item }: { item: PopularMovies }) => (
     <TouchableOpacity
-      onPress={() => router.push(`/Movies/${item.id}`)}
+      onPress={() => {
+        const type = item?.media_type === "tv" ? "tv" : "movie";
+        router.push(`/Movies/${item.id}`);
+      }}
       key={item.id}
       activeOpacity={0.8}
       className="w-[48%] mb-4"
