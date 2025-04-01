@@ -10,7 +10,7 @@ export default function MoviesCard({ movies }: any) {
     <TouchableOpacity
       onPress={() => {
         const type = item?.media_type === "tv" ? "tv" : "movie";
-        router.push(`/Movies/${item.id}`);
+        router.push(`/showdetails/${item.id}?type=${type}`);
       }}
       key={item.id}
       activeOpacity={0.8}

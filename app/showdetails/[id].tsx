@@ -1,8 +1,20 @@
-import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
-import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import {
+  Entypo,
+  Ionicons,
+  MaterialIcons,
+  FontAwesome,
+} from "@expo/vector-icons";
 import { useColorScheme } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -23,13 +35,28 @@ interface MovieDetailsType {
   media_type: string;
 }
 
-export default function MovieDetails() {
-  const { type, id } = useLocalSearchParams();
+interface VideoResult {
+  id: string;
+  key: string;
+  name: string;
+  site: string;
+  type: string;
+}
+
+interface VideoResponse {
+  results: VideoResult[];
+}
+
+export default function ShowDetails() {
+  const { id, type } = useLocalSearchParams(); // Extract type from query params
   const [movie, setMovie] = useState<MovieDetailsType | null>(null);
+  const [trailerKey, setTrailerKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const { colorScheme } = useColorScheme();
+
   const fetchMovie = async () => {
+    if (!type) return;
     const url = `https://api.themoviedb.org/3/${type}/${id}?language=en-US`;
     const options = {
       method: "GET",
@@ -50,9 +77,69 @@ export default function MovieDetails() {
     }
   };
 
+  const fetchTrailer = async () => {
+    if (!type) return;
+    const url = `https://api.themoviedb.org/3/${type}/${id}/videos?language=en-US`;
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${process.env.EXPO_PUBLIC_API_KEY}`,
+      },
+    };
+
+    try {
+      const response = await fetch(url, options);
+      const json = (await response.json()) as VideoResponse;
+
+      // Look for official trailers first
+      const trailer = json.results.find(
+        (video) =>
+          video.site === "YouTube" &&
+          (video.type === "Trailer" || video.type === "Teaser") &&
+          video.name.toLowerCase().includes("trailer")
+      );
+
+      // If no official trailer found, look for any trailer or teaser
+      const fallbackTrailer = json.results.find(
+        (video) =>
+          video.site === "YouTube" &&
+          (video.type === "Trailer" || video.type === "Teaser")
+      );
+
+      // Set the trailer key if found
+      if (trailer) {
+        setTrailerKey(trailer.key);
+      } else if (fallbackTrailer) {
+        setTrailerKey(fallbackTrailer.key);
+      }
+    } catch (err) {
+      console.error("Error fetching trailer:", err);
+    }
+  };
+
   useEffect(() => {
     fetchMovie();
+    fetchTrailer();
   }, [id]);
+
+  const openTrailer = () => {
+    if (trailerKey) {
+      Linking.openURL(`https://www.youtube.com/watch?v=${trailerKey}`);
+    } else {
+      // If no trailer key is available, search on YouTube
+      const searchQuery = encodeURIComponent(
+        `${movie?.title || movie?.name || ""} ${
+          type === "movie"
+            ? movie?.release_date?.slice(0, 4)
+            : movie?.first_air_date?.slice(0, 4)
+        } trailer`
+      );
+      Linking.openURL(
+        `https://www.youtube.com/results?search_query=${searchQuery}`
+      );
+    }
+  };
 
   const renderStarRating = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
@@ -67,7 +154,7 @@ export default function MovieDetails() {
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center bg-black">
+      <View className="flex-1 justify-center items-center bg-background dark:bg-foreground">
         <Text className="text-white text-lg">Loading...</Text>
       </View>
     );
@@ -106,7 +193,7 @@ export default function MovieDetails() {
           />
           <TouchableOpacity
             onPress={() => router.back()}
-            className="absolute top-10 left-4 bg-white/30 p-2 rounded-full"
+            className="absolute top-10 left-4 bg-black/100 p-2 rounded-full"
           >
             <Ionicons name="arrow-back" size={24} color="white" />
           </TouchableOpacity>
@@ -142,23 +229,36 @@ export default function MovieDetails() {
               />
 
               <Text className="dark:text-white text-black ml-2">
-                {new Date(movie.release_date).getFullYear()}
+                {type === "movie"
+                  ? new Date(movie.release_date).getFullYear()
+                  : new Date(movie.first_air_date).getFullYear()}
               </Text>
               <Text className="text-black dark:text-white ml-4">
                 {movie.adult ? "18+" : "13+"}
               </Text>
-              <Text className="text-black dark:text-white ml-4">•</Text>
-
-              <MaterialIcons
-                name="timer"
-                size={20}
-                color={colorScheme === "dark" ? "white" : "black"}
-              />
-
-              <Text className="dark:text-white text-black ml-2">
-                {movie.runtime} mins
-              </Text>
+              {type === "movie" && movie.runtime && (
+                <>
+                  <Text className="text-black dark:text-white ml-4">•</Text>
+                  <MaterialIcons
+                    name="timer"
+                    size={20}
+                    color={colorScheme === "dark" ? "white" : "black"}
+                  />
+                  <Text className="dark:text-white text-black ml-2">
+                    {movie.runtime} mins
+                  </Text>
+                </>
+              )}
             </View>
+
+            <TouchableOpacity
+              onPress={openTrailer}
+              className="flex-row items-center bg-red-600 px-4 py-2 rounded-lg mt-4"
+              activeOpacity={0.8}
+            >
+              <FontAwesome name="youtube-play" size={20} color="white" />
+              <Text className="text-white font-bold ml-2">Watch Trailer</Text>
+            </TouchableOpacity>
           </View>
         </View>
 

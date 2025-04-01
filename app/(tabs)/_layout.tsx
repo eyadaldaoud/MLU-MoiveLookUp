@@ -101,17 +101,17 @@ const _layout = () => {
         }}
       />
       <Tabs.Screen
-        name="saved"
+        name="search"
         options={{
-          title: "Saved",
+          title: "Search",
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <TabIconStyles
               focused={focused}
-              title="Saved"
+              title="Search"
               Icon={
                 <MaterialCommunityIcons
-                  name="bookmark-outline"
+                  name="book-search-outline"
                   size={24}
                   color={colorScheme === "dark" ? "white" : "black"}
                 />

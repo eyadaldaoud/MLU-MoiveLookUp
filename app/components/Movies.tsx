@@ -6,6 +6,7 @@ import { useColorScheme } from "nativewind";
 import DropDownPicker from "react-native-dropdown-picker";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Feather from "@expo/vector-icons/Feather";
+import Pagination from "./Pagination";
 export interface PopularMovies {
   adult: boolean;
   backdrop_path: string;
@@ -26,13 +27,12 @@ export interface PopularMovies {
   first_air_date: string;
   media_type: string;
 }
-
 const MoviesTypeList = [
-  { label: "Popular", value: "popular" },
-  { label: "Trending", value: "trending" },
-  { label: "Top Rated", value: "top_rated" },
-  { label: "Now Playing", value: "now_playing" },
-  { label: "Upcoming", value: "upcoming" },
+  { label: "🔥 Popular", value: "popular" },
+  { label: "📈 Trending", value: "trending" },
+  { label: "⭐ Top Rated", value: "top_rated" },
+  { label: "🎬 Now Playing", value: "now_playing" },
+  { label: "🎟️ Upcoming", value: "upcoming" },
 ];
 
 export default function Movies() {
@@ -49,7 +49,7 @@ export default function Movies() {
       setLoading(true);
       let url;
       if (MoviesType === "trending") {
-        url = "https://api.themoviedb.org/3/trending/all/day?language=en-US";
+        url = `https://api.themoviedb.org/3/trending/all/day?language=en-US&page=${page}`;
       } else {
         url = `https://api.themoviedb.org/3/movie/${MoviesType}?language=en-US&page=${page}`;
       }
@@ -83,10 +83,6 @@ export default function Movies() {
       )}
       {!loading && movies.length > 0 && (
         <View>
-          <Text className="text-2xl font-bold mb-4 text-center">
-            {MoviesTypeList.find((e) => e.value === MoviesType)?.label}
-          </Text>
-
           <DropDownPicker
             open={open}
             value={MoviesType}
@@ -97,45 +93,8 @@ export default function Movies() {
             style={{ marginBottom: 10 }}
             theme={colorScheme === "dark" ? "DARK" : "LIGHT"}
           />
-          <View className="flex flex-row justify-center items-center">
-            <View className="flex flex-row">
-              <Feather
-                onPress={() => setPage(1)}
-                name="skip-back"
-                size={30}
-                className="mt-auto mb-auto"
-                color={colorScheme === "dark" ? "white" : "black"}
-              />
-              <MaterialIcons
-                onPress={() => {
-                  if (page > 1) {
-                    setPage(page - 1);
-                  }
-                }}
-                name="navigate-before"
-                size={40}
-                color={colorScheme === "dark" ? "white" : "black"}
-              />
-            </View>
-            <Text>Page {page}</Text>
-
-            <View className="flex flex-row">
-              <MaterialIcons
-                onPress={() => setPage(page + 1)}
-                name="navigate-next"
-                size={40}
-                color={colorScheme === "dark" ? "white" : "black"}
-              />
-              <Feather
-                onPress={() => setPage(page + 10)}
-                name="skip-forward"
-                size={30}
-                className="mt-auto mb-auto"
-                color={colorScheme === "dark" ? "white" : "black"}
-              />
-            </View>
-          </View>
-          <View className="mb-[360px]">
+          <Pagination page={page} setPage={setPage} totalPages={50} />
+          <View className="mb-[430px]">
             <MoviesCard movies={movies} />
           </View>
         </View>
