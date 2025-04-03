@@ -4,7 +4,7 @@ export default function RootLayout() {
   return (
     <Stack
       screenOptions={{
-        headerShown: false, // This will hide the default header
+        headerShown: false,
         headerTransparent: true,
       }}
     >

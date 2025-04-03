@@ -2,12 +2,11 @@ import React from "react";
 import { View, Text, TouchableOpacity, useColorScheme } from "react-native";
 import { Feather, MaterialIcons } from "@expo/vector-icons";
 
-const Pagination = ({ page, totalPages = 100, setPage }: any) => {
+const Pagination = ({ page, totalPages = 100, setPage, IsDisabled }: any) => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
 
   const textColor = isDark ? "white" : "#1a1a1a";
-  const activeColor = "#3b82f6"; // Blue color for active elements
   const disabledColor = isDark ? "#4b5563" : "#d1d5db";
 
   const isFirstPage = page <= 1;
@@ -68,9 +67,11 @@ const Pagination = ({ page, totalPages = 100, setPage }: any) => {
   }: any) => (
     <TouchableOpacity
       onPress={onPress}
-      disabled={disabled}
+      disabled={disabled || IsDisabled}
       className={`h-10 w-10 rounded-full flex items-center justify-center ${
-        disabled ? "opacity-50" : "active:bg-gray-200 dark:active:bg-gray-700"
+        disabled || IsDisabled
+          ? "opacity-50"
+          : "active:bg-gray-200 dark:active:bg-gray-700"
       }`}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
@@ -89,7 +90,10 @@ const Pagination = ({ page, totalPages = 100, setPage }: any) => {
   );
 
   return (
-    <View className="w-full p-4 flex flex-row items-center justify-center space-x-1">
+    <View
+      style={{ backgroundColor: isDark ? "#1a1a1a" : "white" }}
+      className="w-full p-4 flex flex-row items-center justify-center space-x-1"
+    >
       {/* First page button */}
       <NavButton
         onPress={() => goToPage(1)}
@@ -122,6 +126,7 @@ const Pagination = ({ page, totalPages = 100, setPage }: any) => {
             <TouchableOpacity
               key={`page-${pageNum}`}
               onPress={() => goToPage(pageNum)}
+              disabled={IsDisabled}
               className={`h-8 w-8 mx-1 rounded-full flex items-center justify-center ${
                 page === pageNum
                   ? "bg-blue-500"

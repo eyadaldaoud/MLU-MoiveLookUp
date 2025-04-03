@@ -26,7 +26,7 @@ const Profile = () => {
 
               <Text className="mt-4 text-xl font-bold">Guest</Text>
             </View>
-            <View
+            {/* <View
               className="flex flex-row mt-10 items-start border-2
            border-secondary  p-4 rounded-full"
             >
@@ -39,7 +39,7 @@ const Profile = () => {
                 color={colorScheme === "dark" ? "white" : "black"}
                 className="ml-auto mt-auto mb-auto mr-2"
               />
-            </View>
+            </View> */}
             <TouchableOpacity>
               <View
                 className="flex flex-row mt-4 items-start border-2
@@ -56,7 +56,7 @@ const Profile = () => {
                 />
               </View>
             </TouchableOpacity>
-            <View className="min-h-[280px]" />
+            <View className="min-h-[0px]" />
             <View
               className="flex flex-row mt-4 mb-4 items-start border-2
            border-secondary rounded-full p-4"

@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import React, { useEffect } from "react";
 import Text from "./Text";
 import MoviesCard from "./MoviesCard";
@@ -76,29 +76,37 @@ export default function Movies() {
 
   return (
     <View className="">
-      {loading && (
-        <View className="text-2xl justify-center items-center">
-          <Text>Loading....</Text>
-        </View>
-      )}
-      {!loading && movies.length > 0 && (
-        <View>
-          <DropDownPicker
-            open={open}
-            value={MoviesType}
-            items={MoviesTypeList}
-            setOpen={setOpen}
-            setValue={setMoviesType}
-            placeholder="Select Movie Type"
-            style={{ marginBottom: 10 }}
-            theme={colorScheme === "dark" ? "DARK" : "LIGHT"}
-          />
-          <Pagination page={page} setPage={setPage} totalPages={50} />
+      <View>
+        <DropDownPicker
+          open={open}
+          disabled={loading}
+          value={MoviesType}
+          items={MoviesTypeList}
+          setOpen={setOpen}
+          setValue={setMoviesType}
+          placeholder="Select Movie Type"
+          style={{ marginBottom: 10 }}
+          theme={colorScheme === "dark" ? "DARK" : "LIGHT"}
+        />
+        <Pagination
+          IsDisabled={loading}
+          page={page}
+          setPage={setPage}
+          totalPages={page + 5}
+        />
+        {!loading ? (
           <View className="mb-[430px]">
             <MoviesCard movies={movies} />
           </View>
-        </View>
-      )}
+        ) : (
+          <View className="flex-1 m-40 justify-center items-center">
+            <ActivityIndicator
+              size="large"
+              color={colorScheme === "dark" ? "#FFFFFF" : "#000000"}
+            />
+          </View>
+        )}
+      </View>
     </View>
   );
 }
