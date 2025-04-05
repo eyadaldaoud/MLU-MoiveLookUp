@@ -91,8 +91,8 @@ const Pagination = ({ page, totalPages = 100, setPage, IsDisabled }: any) => {
 
   return (
     <View
-      style={{ backgroundColor: isDark ? "#1a1a1a" : "white" }}
-      className="w-full p-4 flex flex-row items-center justify-center space-x-1"
+      style={{ backgroundColor: isDark ? "#0f172a" : "white" }}
+      className="w-full p-4 flex flex-row items-center justify-center space-x-1 rounded-lg"
     >
       {/* First page button */}
       <NavButton
@@ -129,7 +129,7 @@ const Pagination = ({ page, totalPages = 100, setPage, IsDisabled }: any) => {
               disabled={IsDisabled}
               className={`h-8 w-8 mx-1 rounded-full flex items-center justify-center ${
                 page === pageNum
-                  ? "bg-blue-500"
+                  ? "bg-primary"
                   : "active:bg-gray-200 dark:active:bg-gray-700"
               }`}
               accessibilityRole="button"
