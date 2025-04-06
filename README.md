@@ -1,50 +1,91 @@
-# Welcome to your Expo app 👋
+# Modern React Native App with Expo
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A modern React Native application built with Expo, featuring a beautiful animated splash screen and modern UI design.
 
-## Get started
+## Features
 
-1. Install dependencies
+- 🎨 Modern UI with dark purple theme
+- ✨ Animated splash screen with smooth transitions
+- 🔄 Dynamic navigation based on animation completion
+- 📱 Responsive design that works on all screen sizes
+- 🎯 Optimized performance with native animations
+- 🌈 Beautiful blur effects and shadows
+
+## Tech Stack
+
+- [Expo](https://expo.dev) - React Native development platform
+- [Expo Router](https://docs.expo.dev/router/introduction/) - File-based routing
+- [Expo Blur](https://docs.expo.dev/versions/latest/sdk/blur-view/) - Beautiful blur effects
+- [React Native Animated](https://reactnative.dev/docs/animated) - Smooth animations
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [TailwindCSS](https://tailwindcss.com/) - Utility-first CSS framework
+
+## Getting Started
+
+1. Clone the repository
+
+   ```bash
+   git clone <your-repo-url>
+   cd my-app
+   ```
+
+2. Install dependencies
 
    ```bash
    npm install
    ```
 
-2. Start the app
+3. Start the development server
 
    ```bash
-    npx expo start
+   npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+4. Run on your preferred platform:
+   - Press `i` for iOS simulator
+   - Press `a` for Android emulator
+   - Scan QR code with Expo Go app for physical device
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Project Structure
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+my-app/
+├── app/                    # Main application code
+│   ├── components/         # Reusable components
+│   │   └── SplashScreen.tsx # Animated splash screen
+│   ├── (tabs)/            # Tab-based navigation
+│   └── _layout.tsx        # Root layout configuration
+├── assets/                 # Static assets
+│   └── images/            # Image assets
+└── global.css             # Global styles
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Splash Screen Features
 
-## Learn more
+The app includes a modern splash screen with:
 
-To learn more about developing your project with Expo, look at the following resources:
+- Smooth fade-in animation
+- Scale-up effect with spring physics
+- 360-degree rotation
+- Dynamic navigation timing
+- Beautiful blur effects
+- Modern dark purple theme
+- Responsive design
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Contributing
 
-## Join the community
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-Join our community of developers creating universal apps.
+## License
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Expo team for the amazing development platform
+- React Native community for the robust ecosystem
+- All contributors who help improve this project
