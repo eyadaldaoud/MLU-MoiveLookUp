@@ -1,24 +1,49 @@
-# Modern React Native App with Expo
+# Movie Lookup App
 
-A modern React Native application built with Expo, featuring a beautiful animated splash screen and modern UI design.
+A modern React Native application built with Expo for searching and discovering movies. Features a beautiful animated splash screen, modern UI design, and tab-based navigation with blur effects.
 
 ## Features
 
-- 🎨 Modern UI with dark purple theme
+- 🎬 Comprehensive movie search and discovery
+- 🎨 Modern UI with dark theme support
 - ✨ Animated splash screen with smooth transitions
-- 🔄 Dynamic navigation based on animation completion
-- 📱 Responsive design that works on all screen sizes
-- 🎯 Optimized performance with native animations
-- 🌈 Beautiful blur effects and shadows
+- 📱 Tab-based navigation with blur effects
+- 🔍 Advanced search functionality
+- 🎯 Animated tab bar with custom icons
+- 🌓 Dark/Light mode support
+- 🔄 Dynamic animations using Moti
+- 🎭 Beautiful blur effects using Expo Blur
+- 📱 Responsive design with safe area handling
 
 ## Tech Stack
 
 - [Expo](https://expo.dev) - React Native development platform
 - [Expo Router](https://docs.expo.dev/router/introduction/) - File-based routing
 - [Expo Blur](https://docs.expo.dev/versions/latest/sdk/blur-view/) - Beautiful blur effects
-- [React Native Animated](https://reactnative.dev/docs/animated) - Smooth animations
+- [Moti](https://moti.fyi/) - Animation library
+- [NativeWind](https://www.nativewind.dev/) - TailwindCSS for React Native
+- [React Navigation](https://reactnavigation.org/) - Navigation library
 - [TypeScript](https://www.typescriptlang.org/) - Type safety
-- [TailwindCSS](https://tailwindcss.com/) - Utility-first CSS framework
+
+## Project Structure
+
+```
+my-app/
+├── app/                    # Main application code
+│   ├── components/         # Reusable components
+│   │   └── SplashScreen.tsx # Animated splash screen
+│   ├── (tabs)/            # Tab-based navigation
+│   │   ├── _layout.tsx    # Tab navigation layout
+│   │   ├── index.tsx      # Home screen with featured movies
+│   │   ├── search.tsx     # Movie search screen
+│   │   └── profile.tsx    # User profile screen
+│   ├── showdetails/       # Movie details screens
+│   ├── _layout.tsx        # Root layout configuration
+│   └── index.tsx          # Entry point with splash screen
+├── assets/                 # Static assets
+│   └── images/            # Image assets including app logo
+└── global.css             # Global styles
+```
 
 ## Getting Started
 
@@ -46,31 +71,60 @@ A modern React Native application built with Expo, featuring a beautiful animate
    - Press `a` for Android emulator
    - Scan QR code with Expo Go app for physical device
 
-## Project Structure
+## Key Features
 
-```
-my-app/
-├── app/                    # Main application code
-│   ├── components/         # Reusable components
-│   │   └── SplashScreen.tsx # Animated splash screen
-│   ├── (tabs)/            # Tab-based navigation
-│   └── _layout.tsx        # Root layout configuration
-├── assets/                 # Static assets
-│   └── images/            # Image assets
-└── global.css             # Global styles
-```
+### Movie Search & Discovery
 
-## Splash Screen Features
+- Advanced movie search functionality
+- Featured movies on home screen
+- Detailed movie information
+- Movie details view with rich content
 
-The app includes a modern splash screen with:
+### Tab Navigation
+
+- Custom animated tab bar with blur effects
+- Smooth icon animations using Moti
+- Dark/Light mode support
+- Safe area handling for different devices
+
+### Splash Screen
 
 - Smooth fade-in animation
 - Scale-up effect with spring physics
 - 360-degree rotation
 - Dynamic navigation timing
 - Beautiful blur effects
-- Modern dark purple theme
-- Responsive design
+- Modern dark theme
+
+### UI Components
+
+- Custom tab icons with animations
+- Blur effects for depth
+- Responsive layouts
+- Safe area handling
+- Dark/Light mode support
+
+## Dependencies
+
+### Core
+
+- expo: ~52.0.40
+- react: 18.3.1
+- react-native: 0.76.7
+- expo-router: ~4.0.19
+
+### UI & Animation
+
+- expo-blur: ~14.0.3
+- moti: ^0.30.0
+- nativewind: ^4.1.23
+- react-native-reanimated: ^3.16.2
+
+### Navigation
+
+- @react-navigation/bottom-tabs: ^7.2.0
+- @react-navigation/native: ^7.0.14
+- @react-navigation/stack: ^7.2.3
 
 ## Contributing
 
@@ -88,4 +142,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - Expo team for the amazing development platform
 - React Native community for the robust ecosystem
-- All contributors who help improve this project
+- Moti team for the excellent animation library
+- NativeWind team for bringing TailwindCSS to React Native
